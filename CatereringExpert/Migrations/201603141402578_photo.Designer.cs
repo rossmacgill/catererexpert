@@ -7,13 +7,13 @@ namespace CatereringExpert.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class DataAnnotations : IMigrationMetadata
+    public sealed partial class photo : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(DataAnnotations));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(photo));
         
         string IMigrationMetadata.Id
         {
-            get { return "201603091230170_DataAnnotations"; }
+            get { return "201603141402578_photo"; }
         }
         
         string IMigrationMetadata.Source

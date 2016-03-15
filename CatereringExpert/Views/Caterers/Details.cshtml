@@ -11,6 +11,12 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.Photo)
+        </dt>
+        <dd>
+            <img src="@Url.Content(@Model.Photo)" />
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.CompanyName)
         </dt>
 
@@ -87,7 +93,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Website)
+            <a href="@Model.Website" target="_blank">@Html.DisplayFor(modelItem => Model.Website)</a>
         </dd>
 
         <dt>
@@ -95,7 +101,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Email)
+            <a href="mailto:@Model.Email" target="_blank">@Html.DisplayFor(modelItem => Model.Email)</a>
         </dd>
 
     </dl>
@@ -104,3 +110,10 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+@ViewBag.
+        </li>
+<li>@ViewBag.OnExceptionError</li>
+@*<li>@{Html.RenderAction("ChildAction", new { param = "first" });}</li>@**@
+@Html.Action("Edit", "Caterers", new { id = Model.ID })
+ 

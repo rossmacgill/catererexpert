@@ -1,12 +1,13 @@
 ﻿using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System.Web;
 
 namespace CatereringExpert.Models
 {
     public class Caterers
     {
-        public DbSet<FilePath> FilePaths { get; set; }
+        //public DbSet<FilePath> FilePaths { get; set; }
         public int ID { get; set; }
         [StringLength(60, MinimumLength = 3)]
         [Required]
@@ -48,12 +49,22 @@ namespace CatereringExpert.Models
 
       //  [RegularExpression(@"^[A-Z]+[a-zA-Z''-'\s]*$")]
         public string Email { get; set; }
+       // public byte[] Image { get; set; }
 
-        public virtual ICollection<File> Files { get; set; }
+        public string Photo { get; set; }
+
+        public string CaterersImage
+        {
+            get { return CompanyName.Replace(" ", string.Empty) + ".jpg"; }
+        }
+
+        // virtual ICollection<File> Files { get; set; }
     }
     public class CatererDBContext : DbContext
     {
         public DbSet<Caterers> Caterers { get; set; }
+        //public DbSet<File> Files { get; set; }
+        //public DbSet<FilePath> FilePaths { get; set; }
     }
 
 }

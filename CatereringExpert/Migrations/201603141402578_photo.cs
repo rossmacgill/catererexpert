@@ -3,9 +3,16 @@ namespace CatereringExpert.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Files : DbMigration
+    public partial class photo : DbMigration
     {
         public override void Up()
+        {
+            DropForeignKey("dbo.Files", "Caterers_ID", "dbo.Caterers");
+            DropIndex("dbo.Files", new[] { "Caterers_ID" });
+            DropTable("dbo.Files");
+        }
+        
+        public override void Down()
         {
             CreateTable(
                 "dbo.Files",
@@ -19,17 +26,10 @@ namespace CatereringExpert.Migrations
                         PersonId = c.Int(nullable: false),
                         Caterers_ID = c.Int(),
                     })
-                .PrimaryKey(t => t.FileId)
-                .ForeignKey("dbo.Caterers", t => t.Caterers_ID)
-                .Index(t => t.Caterers_ID);
+                .PrimaryKey(t => t.FileId);
             
-        }
-        
-        public override void Down()
-        {
-            DropForeignKey("dbo.Files", "Caterers_ID", "dbo.Caterers");
-            DropIndex("dbo.Files", new[] { "Caterers_ID" });
-            DropTable("dbo.Files");
+            CreateIndex("dbo.Files", "Caterers_ID");
+            AddForeignKey("dbo.Files", "Caterers_ID", "dbo.Caterers", "ID");
         }
     }
 }

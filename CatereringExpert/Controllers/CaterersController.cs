@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CatereringExpert.Models;
+using System.IO;
+using PagedList;
 
 namespace CatereringExpert.Controllers
 {
@@ -20,8 +22,25 @@ namespace CatereringExpert.Controllers
         //    return View(db.Caterers.ToList());
         //}
 
-        public ActionResult Index(string foodGenre, string searchString)
+        public ActionResult Index(string foodGenre, string searchString, string sortOrder, string currentFilter, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.EventSortParm = sortOrder == "Event" ? "event_desc" : "Event";
+            ViewBag.FoodSortParm = sortOrder == "Food" ? "food_desc" : "Food";
+            ViewBag.PriceSortParm = sortOrder == "Price" ? "price_desc" : "Price";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
             var GenreLst = new List<string>();
 
             var GenreQry = from d in db.Caterers
@@ -44,8 +63,38 @@ namespace CatereringExpert.Controllers
                 Caterers = Caterers.Where(x => x.Foodtype == foodGenre);
             }
 
-            return View(Caterers);
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    Caterers = Caterers.OrderByDescending(m => m.CompanyName);
+                    break;
+                case "event_desc":
+                    Caterers = Caterers.OrderBy(m => m.EventType);
+                    break;
+                case "food_desc":
+                    Caterers = Caterers.OrderByDescending(m => m.Foodtype);
+                    break;
+                case "price_desc":
+                    Caterers = Caterers.OrderByDescending(m => m.AvePrice);
+                    break;
+                default:
+                    Caterers = Caterers.OrderBy(m => m.CompanyName);
+                    break;
+
+            }
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(Caterers.ToPagedList(pageNumber, pageSize));
+
+
         }
+
+        [ChildActionOnly]
+        public ActionResult ChildAction(string param)
+        {
+            ViewBag.Message = "Child Action called. " + param;
+            return View();
+        }  
 
         // GET: Caterers/Details/5
         public ActionResult Details(int? id)
@@ -73,10 +122,12 @@ namespace CatereringExpert.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,CompanyName,Address,City,Postcode,PhoneNumber,EventType,Foodtype,AvePrice,Description,Website,Email")] Caterers caterers)
+        public ActionResult Create([Bind(Include = "ID,CompanyName,Address,City,Postcode,PhoneNumber,EventType,Foodtype,AvePrice,Description,Website,Email,Photo")] HttpPostedFileBase imageLoad2, Caterers caterers)
         {
+
             if (ModelState.IsValid)
             {
+
                 db.Caterers.Add(caterers);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -130,6 +181,8 @@ namespace CatereringExpert.Controllers
             }
             return View(caterers);
         }
+
+
 
         // POST: Caterers/Delete/5
         [HttpPost, ActionName("Delete")]

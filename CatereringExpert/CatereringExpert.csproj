@@ -58,6 +58,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -185,17 +193,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Logic\RoleActions.cs" />
-    <Compile Include="Migrations\201603091156330_InitialCreate.cs" />
-    <Compile Include="Migrations\201603091156330_InitialCreate.Designer.cs">
-      <DependentUpon>201603091156330_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603091230170_DataAnnotations.cs" />
-    <Compile Include="Migrations\201603091230170_DataAnnotations.Designer.cs">
-      <DependentUpon>201603091230170_DataAnnotations.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603102331129_Files.cs" />
-    <Compile Include="Migrations\201603102331129_Files.Designer.cs">
-      <DependentUpon>201603102331129_Files.cs</DependentUpon>
+    <Compile Include="Migrations\201603141402578_photo.cs" />
+    <Compile Include="Migrations\201603141402578_photo.Designer.cs">
+      <DependentUpon>201603141402578_photo.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -216,6 +216,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -265,7 +266,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Index.cshtml">
+      <BrowseToURL>~/Caterers/Index</BrowseToURL>
+    </Content>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -295,6 +298,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Photos\" />
     <Folder Include="Views\File\" />
   </ItemGroup>
   <ItemGroup>
@@ -305,14 +309,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603091156330_InitialCreate.resx">
-      <DependentUpon>201603091156330_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603091230170_DataAnnotations.resx">
-      <DependentUpon>201603091230170_DataAnnotations.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603102331129_Files.resx">
-      <DependentUpon>201603102331129_Files.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603141402578_photo.resx">
+      <DependentUpon>201603141402578_photo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
